@@ -1,0 +1,40 @@
+{
+  "name": "healthcare-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest --runInBand",
+    "dev": "nodemon server.js"
+    
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/erzajuan/healthcare-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/erzajuan/healthcare-api/issues"
+  },
+  "homepage": "https://github.com/erzajuan/healthcare-api#readme",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "express-validator": "^7.3.1",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongodb": "^7.0.0",
+    "mongoose": "^9.0.1",
+    "morgan": "^1.10.1"
+  },
+  "devDependencies": {
+    "jest": "^30.2.0",
+    "nodemon": "^3.1.11",
+    "supertest": "^7.1.4"
+  }
+}
