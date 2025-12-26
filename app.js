@@ -16,8 +16,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Conncet to Database
-const connectDB = require("./config/db");
-connectDB();
+if (process.env.NODE_ENV !== "test") {
+  require("./config/db")();
+}
 
 // Routes
 const routes = require("./routes");

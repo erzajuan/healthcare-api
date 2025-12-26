@@ -38,6 +38,7 @@ const loginUser = async (email, password) => {
   try {
     const checkEmail = await User.findOne({ email });
 
+
     if (!checkEmail) {
       return { success: false, type: "UNAUTHORIZED", message: "Invalid email" };
     }
@@ -68,11 +69,11 @@ const loginUser = async (email, password) => {
     const access_token = generateToken(payload);
     const refreshToken = generateRefreshToken(checkEmail._id);
 
-    await redisClient.set(
-      `refreshToken:${checkEmail._id}`,
-      refreshToken,
-      { EX: parseInt(process.env.JWT_REFRESH_EXPIRES_IN) } // 1 day expiration
-    );
+    if (redisClient && redisClient.isOpen) {
+      await redisClient.set(`refreshToken:${checkEmail._id}`, refreshToken, {
+        EX: Number(process.env.JWT_REFRESH_EXPIRES_IN),
+      });
+    }
 
     return {
       success: true,
