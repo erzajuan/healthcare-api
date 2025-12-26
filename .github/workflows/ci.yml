@@ -2,13 +2,9 @@ name: CI - Healthcare API
 
 on:
   push:
-    branches:
-      - main
-      - dev
+    branches: [main, dev]
   pull_request:
-    branches:
-      - main
-      - dev
+    branches: [main, dev]
 
 jobs:
   test:
@@ -16,29 +12,30 @@ jobs:
 
     services:
       mongo:
-        image: mongo:7
+        image: mongo:6
         ports:
           - 27017:27017
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+    env:
+      NODE_ENV: test
+      JWT_SECRET_KEY: testsecret
+      JWT_REFRESH_SECRET_KEY: testrefresh
+      JWT_EXPIRES_IN: 3600
+      JWT_REFRESH_EXPIRES_IN: 86400
+      SALT: 10
 
-      - name: Setup Node.js
+      MONGO_CLUSTER_URI: mongodb://127.0.0.1:27017
+      MONGO_DB: healthcare_test
+
+      REDIS_DISABLED: true
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Setup test env
-        run: |
-          echo "NODE_ENV=test" >> $GITHUB_ENV
-          echo "JWT_SECRET_KEY=ci_secret" >> $GITHUB_ENV
-          echo "SALT=10" >> $GITHUB_ENV
-          echo "MONGO_CLUSTER_URI=mongodb://localhost:27017" >> $GITHUB_ENV
-          echo "MONGO_DB=healthcare_test" >> $GITHUB_ENV
-
-      - name: Run tests
-        run: npm test
+      - run: npm ci
+      - run: npm run test
