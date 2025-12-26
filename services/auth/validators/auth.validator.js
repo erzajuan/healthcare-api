@@ -14,6 +14,12 @@ const registerValidate = [
     .withMessage("Password is required")
     .isLength({ min: 6 })
     .withMessage("Password must be at least 6 characters"),
+
+  check("role")
+    .notEmpty()
+    .withMessage("Role is required")
+    .isIn(["admin", "user"])
+    .withMessage("Role must be either 'admin' or 'user'"),
 ];
 
 module.exports = { registerValidate };

@@ -1,11 +1,11 @@
 const jwt = require("jsonwebtoken");
-const token = process.env.JWT_SECRET;
-const token_refresh = process.env.JWT_REFRESH_SECRET;
+const token = process.env.JWT_SECRET_KEY;
+const token_refresh = process.env.JWT_REFRESH_SECRET_KEY;
 const expire_time = process.env.JWT_EXPIRE_TIME || "1h";
 const expire_time_refresh = process.env.JWT_REFRESH_EXPIRE_TIME || "1d";
 
 const generateToken = (data) => {
-  const access_token = jwt.sign({ data }, token, {
+  const access_token = jwt.sign(data, token, {
     algorithm: "HS256",
     expiresIn: expire_time,
   });

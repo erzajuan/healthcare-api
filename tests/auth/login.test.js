@@ -1,17 +1,27 @@
 const request = require("supertest");
 const mongoose = require("mongoose");
 const app = require("../../app.js");
-const { User } = require("../../models/index.js");
+const { User, Role } = require("../../models/index.js");
 const bcrypt = require("bcrypt");
 
 beforeAll(async () => {
   await mongoose.connect(
     `${process.env.MONGO_CLUSTER_URI}/${process.env.MONGO_DB}?retryWrites=true&w=majority`
   );
+
+  const userRole = await Role.create({ name: "user" });
+
+  await User.create({
+    name: "Erza",
+    email: "erzajuan@gmail.com",
+    password: await bcrypt.hash("123456", parseInt(process.env.SALT)),
+    role_id: userRole._id,
+  });
 });
 
 afterEach(async () => {
   await User.deleteMany();
+  await Role.deleteMany();
 });
 
 afterAll(async () => {
@@ -20,12 +30,6 @@ afterAll(async () => {
 
 describe("POST /api/v1/auth/login", () => {
   it("should login user successfully", async () => {
-    await User.create({
-      name: "Erza",
-      email: "erzajuan@gmail.com",
-      password: await bcrypt.hash("123456", parseInt(process.env.SALT)),
-    });
-
     const res = await request(app).post("/api/v1/auth/login").send({
       email: "erzajuan@gmail.com",
       password: "123456",

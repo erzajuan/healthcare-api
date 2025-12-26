@@ -7,6 +7,8 @@ const connectDB = async () => {
     await mongoose.connect(
       `${process.env.MONGO_CLUSTER_URI}/${process.env.MONGO_DB}?retryWrites=true&w=majority`
     );
+
+    // console.log("MongoDB connected successfully");
   } catch (error) {
     console.error("MongoDB connection error:", error);
     process.exit(1);

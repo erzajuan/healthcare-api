@@ -5,7 +5,9 @@ route.get("/", (req, res) => {
 });
 
 const authRoute = require("./auth.routes");
+const organizationRoute = require("./organization.routes");
 
 route.use("/auth", authRoute);
+route.use("/organizations", organizationRoute);
 
 module.exports = route;

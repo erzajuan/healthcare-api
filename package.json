@@ -6,7 +6,6 @@
   "scripts": {
     "test": "jest --runInBand",
     "dev": "nodemon server.js"
-    
   },
   "repository": {
     "type": "git",
@@ -25,12 +24,15 @@
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
+    "express-rate-limit": "^8.2.1",
     "express-validator": "^7.3.1",
     "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.3",
     "mongodb": "^7.0.0",
     "mongoose": "^9.0.1",
-    "morgan": "^1.10.1"
+    "morgan": "^1.10.1",
+    "rate-limit-redis": "^4.3.1",
+    "redis": "^5.10.0"
   },
   "devDependencies": {
     "jest": "^30.2.0",
